@@ -7,5 +7,6 @@ def gen_chart(label, value, output_path):
     myexplode = [0.01, 0]
 
     plt.pie(y, labels=mylabels, explode=myexplode)
-    plt.show()
+    plt.savefig(output_path)
+    # plt.show()
     #save to chart to a file name passed via output_path

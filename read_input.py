@@ -58,7 +58,8 @@ def gen_chart(label, value, output_path):
     myexplode = [0.01, 0]
 
     plt.pie(y, labels=mylabels, explode=myexplode)
-    plt.show()
+    # plt.show()
+    plt.savefig(output_path)
 
 
 def calculate_completeness(dictionary, catalog):
@@ -81,7 +82,7 @@ def calculate_completeness(dictionary, catalog):
     print("\nCompleteness of the db: " + str(rs) + " %")
     output[my_db_name] = rs
     print(output)
-    gen_chart(["Done", "Not done"], [rs, 100-rs], "abc")
+    gen_chart(["Done", "Not done"], [rs, 100-rs], "database.png")
 
 
 catalog_arr = input_to_2d_array("./catlog.csv")
