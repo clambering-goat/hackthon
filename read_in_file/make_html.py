@@ -216,5 +216,5 @@ autocomplete(document.getElementById("myInput"), countries);
 full_data,has_data,list_db,db_data,list_evey_thing,missing_data=read_in.run_get_array_data()
 
 msg = tm.render(items=full_data,has_data=has_data,list_db=list_db,db_data=db_data,list_evey_thing=list_evey_thing,missing_data=missing_data)
-file=open("C:/Users/cameron/Desktop/html_demo.html","w")
+file=open("./html_demo.html","w")
 file.write(msg)
