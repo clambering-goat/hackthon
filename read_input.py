@@ -62,7 +62,7 @@ def calculate_completeness(dictionary, catalog):
             print("Not found " + table)
     rs = found * 100 / total
     print("\nCompleteness of the db: " + str(rs) + " %")
-    output['my_db_name'] = rs
+    output[my_db_name] = rs
     print(output)
 
 
