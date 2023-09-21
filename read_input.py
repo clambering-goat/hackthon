@@ -71,14 +71,14 @@ def calculate_completeness(dictionary, catalog):
     print("\nCompleteness of the db: " + str(rs) + " %")
     output[my_db_name] = rs
     print(output)
-    gen_chart(["Done", "Not done"], [rs, 100-rs], "database.png")
+    gen_chart(["Done", "Not done"], [rs, 100-rs], my_db_name + ".png")
 
 
 catalog_arr = input_to_2d_array("./catlog.csv")
 catalog_dict = create_dic_for_input(catalog_arr)
 
-dict_files = ["./data_dic.csv"]
-# dict_files = ["./data_dic.csv", "./data_dic_2.csv"]
+# dict_files = ["./data_dic.csv"]
+dict_files = ["./data_dic.csv", "./data_dic_2.csv"]
 
 for file in dict_files:
     dictionary_arr = input_to_2d_array(file)
