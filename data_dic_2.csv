@@ -1,0 +1,4 @@
+﻿DBNAME,CREATOR,NAME,NAME2,COLTYPE,LENGTH,description 
+db_2,tom2,table1,feild4_realname, sting ,1,note4
+db_2,tom2,table2,feild5_realname, date ,1,note4
+db_2,tom2,table3,feild6_realname, sting ,3,note5
