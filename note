@@ -1,0 +1,31 @@
+
+# feild look for input 
+database_name
+CREATOR
+enity
+attbute_name
+TYPE
+LENGTH
+notes
+location_of_soucre
+
+# output 
+Data Store
+Table name
+Data element
+Data element name
+Definition
+Source and Data Logic
+Data Type and Length
+Allowable Values
+Semantic Rules
+Data steward
+Date created
+Date updated
+Alias names
+Data sensitivity 
+Usage
+Notes
+
+
+
