@@ -1,4 +1,0 @@
-﻿DBNAME,CREATOR,NAME,NAME2,COLTYPE,LENGTH,description 
-db_1,tom,table1,feild1_realname, sting ,1,note1
-db_1,tom,table2,feild2_realname, sting ,1,note2
-db_1,tom,table3,feild3_realname, number ,2,note3
