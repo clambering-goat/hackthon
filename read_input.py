@@ -55,7 +55,7 @@ def calculate_field_level(dict, cat, name):
 def gen_chart(label, value, output_path):
     y = np.array(value)
     mylabels = label
-    myexplode = [0.2, 0]
+    myexplode = [0.01, 0]
 
     plt.pie(y, labels=mylabels, explode=myexplode)
     plt.show()
