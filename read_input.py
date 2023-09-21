@@ -11,33 +11,38 @@ def input_to_2d_array(file_path):
 
 
 def compare_dic_cat(dictionary, catlog):
-    cat_dict = {}
-    tables = {}
+    data_dict = {}
+
+    for index in range(0, len(dictionary)):
+        row = dictionary[index]
+        tables = {}
+        fields = set()
+        if row[0] in data_dict:
+            tables = data_dict[row[0]]
+            if row[2] in tables:
+                fields = tables[row[2]]
+                fields.add(row[3])
+            else:
+                tables[row[2]] = set()
+                fields = tables[row[2]]
+                fields.add(row[3])
+
+        else:
+            data_dict[row[0]] = {}
+
+
+    #print(data_dict)
+
     for index in range(1, len(catlog)):
         row = catlog[index]
-        fields = set()
-        if row[0] in cat_dict:
-            tables = cat_dict[row[0]]
-        else:
-            cat_dict[row[0]] = {}
-
-        if row[2] in tables:
-            fields = tables[row[2]]
-            fields.add(row[3])
-        else:
-            tables[row[2]] = {row[3]}
-    #print(cat_dict)
-
-    for index in range(1, len(dictionary)):
-        row = dictionary[index]
-        if row[0] in cat_dict:
-            tables = cat_dict[row[0]]
+        if row[0] in data_dict:
+            tables = data_dict[row[0]]
             if row[2] in tables:
                 fields = tables[row[2]]
                 if not row[3] in fields:
                     print('Missing Field: ' + row[3])
             else:
-                print('Missing Entity: ' + row[2])
+                print('DB ' + row[0] + ' Missing Entity: ' + row[2])
         else:
             print('Missing DB: ' + row[0])
 
