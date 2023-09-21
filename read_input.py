@@ -1,7 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 import numpy as np
-
+from gen_png_chart import *
 output = {}
 
 
@@ -50,17 +50,6 @@ def calculate_field_level(dict, cat, name):
     rs = found*100/total
     print("Completeness of the table: " + str(rs) + " %\n")
     output[name] = rs
-
-
-def gen_chart(label, value, output_path):
-    y = np.array(value)
-    mylabels = label
-    myexplode = [0.01, 0]
-
-    plt.pie(y, labels=mylabels, explode=myexplode)
-    # plt.show()
-    plt.savefig(output_path)
-
 
 def calculate_completeness(dictionary, catalog):
     # Get db name
