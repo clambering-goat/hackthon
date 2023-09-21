@@ -1,66 +1,78 @@
 import csv
 
+output = {}
 def input_to_2d_array(file_path):
     out_array = []
     with open(file_path) as csvfile:
         spamreader = csv.reader(csvfile)
         for row in spamreader:
             out_array.append(row)
-            # print(', '.join(row))
     return out_array
 
-
-def compare_dic_cat(dictionary, catlog):
+def create_dic_for_input(data):
     data_dict = {}
 
-    for index in range(0, len(dictionary)):
-        row = dictionary[index]
+    for index in range(1, len(data)):
+        row = data[index]
         tables = {}
         fields = set()
-        if row[0] in data_dict:
-            tables = data_dict[row[0]]
-            if row[2] in tables:
-                fields = tables[row[2]]
-                fields.add(row[3])
-            else:
-                tables[row[2]] = set()
-                fields = tables[row[2]]
-                fields.add(row[3])
 
+        db_name = row[0]
+        table_name = row[2]
+        field_name = row[3]
+
+        if not db_name in data_dict:
+            data_dict[db_name] = {}
+
+        tables = data_dict[db_name]
+        if not table_name in tables:
+            tables[table_name] = set()
+
+        fields = tables[table_name]
+        fields.add(field_name)
+
+    return data_dict
+
+def calculate_field_level(dict, cat, name):
+    print(name)
+    total = 0
+    found = 0
+    for field in cat:
+        total = total + 1
+        if field in dict:
+            found = found + 1
+    rs = found*100/total
+    print("Completeness of the table: " + str(rs) + " %\n")
+    output[name] = rs
+
+def calculate_completeness(dictionary, catalog):
+    #Get db name
+    my_db_name = list(dictionary.keys())[0]
+    #Get catalog for dict
+    my_cat = catalog[my_db_name]
+    total = 0
+    found = 0
+    for table in my_cat:
+        total = total + 1
+        if table in dictionary[my_db_name]:
+            print("Found " + table)
+            calculate_field_level(dictionary[my_db_name][table], my_cat[table], table)
+            found = found + 1
         else:
-            data_dict[row[0]] = {}
+            print("Not found " + table)
+    rs = found * 100 / total
+    print("\nCompleteness of the db: " + str(rs) + " %")
+    output['my_db_name'] = rs
+    print(output)
 
 
-    #print(data_dict)
+catalog_arr = input_to_2d_array("./catlog.csv")
+catalog_dict = create_dic_for_input(catalog_arr)
 
-    for index in range(1, len(catlog)):
-        row = catlog[index]
-        if row[0] in data_dict:
-            tables = data_dict[row[0]]
-            if row[2] in tables:
-                fields = tables[row[2]]
-                if not row[3] in fields:
-                    print('Missing Field: ' + row[3])
-            else:
-                print('DB ' + row[0] + ' Missing Entity: ' + row[2])
-        else:
-            print('Missing DB: ' + row[0])
+dict_files = ["./data_dic.csv"]
+#dict_files = ["./data_dic.csv", "./data_dic_2.csv"]
 
-
-    # dictionary_dic={}
-    # for count, q in enumerate(dictionary[1:]):
-    #     key_dic = (', '.join([ q[0], q[2], q[3]]))
-    #     dictionary_dic[key_dic]=q
-    #     print(key_dic)
-    #
-    # print("----------------")
-    # for count, q in enumerate(catlog[1:]):
-    #     key_dic = (', '.join([, q[0], q[2], q[3]]))
-    #     print(key_dic)
-    return ''
-
-print("hello")
-catlog = input_to_2d_array("./catlog.csv")
-dictionary = input_to_2d_array("./data_dic.csv")
-dictionary2 = input_to_2d_array("./data_dic_2.csv")
-compare_dic_cat(dictionary, catlog)
+for file in dict_files:
+    dictionary_arr = input_to_2d_array(file)
+    dictionary_dict = create_dic_for_input(dictionary_arr)
+    calculate_completeness(dictionary_dict, catalog_dict)
