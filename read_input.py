@@ -1,6 +1,10 @@
 import csv
+import matplotlib.pyplot as plt
+import numpy as np
 
 output = {}
+
+
 def input_to_2d_array(file_path):
     out_array = []
     with open(file_path) as csvfile:
@@ -8,6 +12,7 @@ def input_to_2d_array(file_path):
         for row in spamreader:
             out_array.append(row)
     return out_array
+
 
 def create_dic_for_input(data):
     data_dict = {}
@@ -33,6 +38,7 @@ def create_dic_for_input(data):
 
     return data_dict
 
+
 def calculate_field_level(dict, cat, name):
     print(name)
     total = 0
@@ -45,10 +51,20 @@ def calculate_field_level(dict, cat, name):
     print("Completeness of the table: " + str(rs) + " %\n")
     output[name] = rs
 
+
+def gen_chart(label, value, output_path):
+    y = np.array(value)
+    mylabels = label
+    myexplode = [0.2, 0]
+
+    plt.pie(y, labels=mylabels, explode=myexplode)
+    plt.show()
+
+
 def calculate_completeness(dictionary, catalog):
-    #Get db name
+    # Get db name
     my_db_name = list(dictionary.keys())[0]
-    #Get catalog for dict
+    # Get catalog for dict
     my_cat = catalog[my_db_name]
     total = 0
     found = 0
@@ -56,7 +72,8 @@ def calculate_completeness(dictionary, catalog):
         total = total + 1
         if table in dictionary[my_db_name]:
             print("Found " + table)
-            calculate_field_level(dictionary[my_db_name][table], my_cat[table], table)
+            calculate_field_level(
+                dictionary[my_db_name][table], my_cat[table], table)
             found = found + 1
         else:
             print("Not found " + table)
@@ -64,13 +81,14 @@ def calculate_completeness(dictionary, catalog):
     print("\nCompleteness of the db: " + str(rs) + " %")
     output[my_db_name] = rs
     print(output)
+    gen_chart(["Done", "Not done"], [rs, 100-rs], "abc")
 
 
 catalog_arr = input_to_2d_array("./catlog.csv")
 catalog_dict = create_dic_for_input(catalog_arr)
 
 dict_files = ["./data_dic.csv"]
-#dict_files = ["./data_dic.csv", "./data_dic_2.csv"]
+# dict_files = ["./data_dic.csv", "./data_dic_2.csv"]
 
 for file in dict_files:
     dictionary_arr = input_to_2d_array(file)
