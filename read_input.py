@@ -42,7 +42,7 @@ def calculate_field_level(dict, cat, entity, db_name):
             found = found + 1
         else:
             print("Missing attribute " + field)
-            missing.append("Database " + db_name + " ==> entity " +
+            missing.append("Database " + db_name + ", entity " +
                            entity + " missing attribute " + field)
     rs = found*100/total
     print("Completeness of the table: " + str(rs) + " %\n")
