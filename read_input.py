@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 from gen_png_chart import *
-output = {}
+output = []
 
 
 def input_to_2d_array(file_path):
@@ -49,7 +49,7 @@ def calculate_field_level(dict, cat, name):
             found = found + 1
     rs = found*100/total
     print("Completeness of the table: " + str(rs) + " %\n")
-    output[name] = rs
+    output.append({'label': name, 'value': rs})
 
 def calculate_completeness(dictionary, catalog):
     # Get db name
@@ -69,18 +69,29 @@ def calculate_completeness(dictionary, catalog):
             print("Not found " + table)
     rs = found * 100 / total
     print("\nCompleteness of the db: " + str(rs) + " %")
-    output[my_db_name] = rs
+    output.append({'label': my_db_name, 'value': rs})
     print(output)
-    gen_chart(["Done", "Not done"], [rs, 100-rs], my_db_name + ".png")
+    # gen_chart(["Done", "Not done"], [rs, 100-rs], my_db_name + ".png")
+    return output
 
 
-catalog_arr = input_to_2d_array("./catlog.csv")
-catalog_dict = create_dic_for_input(catalog_arr)
+def main():
+    catalog_arr = input_to_2d_array("./catlog.csv")
+    catalog_dict = create_dic_for_input(catalog_arr)
 
-# dict_files = ["./data_dic.csv"]
-dict_files = ["./data_dic.csv", "./data_dic_2.csv"]
+    # dict_files = ["./data_dic.csv"]
+    dict_files = ["./data_dic.csv", "./data_dic_2.csv"]
 
-for file in dict_files:
-    dictionary_arr = input_to_2d_array(file)
+    for file in dict_files:
+        dictionary_arr = input_to_2d_array(file)
+        dictionary_dict = create_dic_for_input(dictionary_arr)
+        calculate_completeness(dictionary_dict, catalog_dict)
+
+def compare():
+    catalog_arr = input_to_2d_array("./uploads/csv/catalog.csv")
+    catalog_dict = create_dic_for_input(catalog_arr)
+
+    dictionary_arr = input_to_2d_array("./uploads/csv/dictionary.csv")
     dictionary_dict = create_dic_for_input(dictionary_arr)
-    calculate_completeness(dictionary_dict, catalog_dict)
+        
+    return calculate_completeness(dictionary_dict, catalog_dict)
